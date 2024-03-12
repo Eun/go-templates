@@ -1,0 +1,38 @@
+meta {
+  name: insert 100 users
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8000/list
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Joe",
+    "email": "joe@example.com"
+  }
+}
+
+script:pre-request {
+  const axios = require("axios");
+  let calls = [];
+  for (let i = 1; i <= 100; i++) {
+    const index = i.toString().padStart(2, '0');
+    calls.push(
+      axios({
+        method: 'post',
+        url: `${bru.getEnvVar("url")}/insert`,
+        data: {
+          name: `User${index}`,
+          email: `user${index}@example.com`
+        }
+      })
+    );
+  }
+  
+  await Promise.all(calls);
+}

@@ -1,0 +1,22 @@
+meta {
+  name: get
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/list?next_page_token={{next_page_token}}&max_results=2
+  body: none
+  auth: none
+}
+
+query {
+  next_page_token: {{next_page_token}}
+  max_results: 2
+  ~sync_token: {{sync_token}}
+}
+
+vars:post-response {
+  next_page_token: res('next_page_token')
+  sync_token: res('sync_token')
+}

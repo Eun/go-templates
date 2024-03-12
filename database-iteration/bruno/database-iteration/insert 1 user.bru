@@ -1,0 +1,18 @@
+meta {
+  name: insert 1 user
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/insert
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Joe1",
+    "email": "joe@example.com"
+  }
+}

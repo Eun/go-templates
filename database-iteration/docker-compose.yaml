@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mariadb:11
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_DATABASE: example
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+     DATABASE_DSN: root:example@tcp(db:3306)/example
+    depends_on:
+      - db
